@@ -1,0 +1,47 @@
+.status-card {
+  background: #0f172a;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.status-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.status-card-header h3 {
+  font-size: 18px;
+  color: #f8fafc;
+}
+
+.status-icon {
+  color: #22d3ee;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #1e293b;
+  color: #cbd5e1;
+  font-size: 15px;
+}
+
+.status-row:last-child {
+  border-bottom: none;
+}
+
+.status-badge.done {
+  color: #10b981;
+}
+
+.status-badge.progress {
+  color: #f59e0b;
+  font-size: 13px;
+}

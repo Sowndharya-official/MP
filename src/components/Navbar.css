@@ -1,0 +1,55 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0f172a;
+  padding: 20px 60px;
+  color: white;
+}
+
+.logo h2 {
+  color: #38bdf8;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #38bdf8;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.login-btn {
+  padding: 10px 20px;
+  border: 1px solid #38bdf8;
+  background: transparent;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.start-btn {
+  padding: 10px 20px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  background: #1d4ed8;
+}
