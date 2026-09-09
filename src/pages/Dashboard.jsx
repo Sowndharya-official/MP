@@ -1,8 +1,41 @@
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 
+import { useEffect, useState } from "react";
+
+
 function Dashboard() {
   const navigate = useNavigate();
+
+  const [stats, setStats] = useState({
+    totalProjects: 0,
+    deployments: 0,
+    securityAlerts: 0,
+    aiReviews: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/dashboard/stats"
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+          setStats(data.stats);
+        }
+      } catch (error) {
+        console.error(
+          "Failed to load dashboard statistics:",
+          error
+        );
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   return (
     <div className="dashboard">
@@ -33,33 +66,34 @@ function Dashboard() {
           </div>
 
           <button
-            className="new-project-btn"
-            onClick={() => navigate("/upload-project")}
-          >
-            + New Project
-          </button>
+            onClick={() => navigate("/new-project")}
+            className="new-project-button"
+              >
+  + New Project
+</button>
         </div>
 
         {/* Dashboard Cards */}
         <div className="cards">
           <div className="card">
             <h3>Total Projects</h3>
-            <h2>12</h2>
+            <h2>{stats.totalProjects}</h2>
           </div>
 
           <div className="card">
             <h3>Deployments</h3>
-            <h2>18</h2>
+            <h2>{stats.deployments}</h2>
+            
           </div>
 
           <div className="card">
             <h3>Security Alerts</h3>
-            <h2>5</h2>
+            <h2>{stats.securityAlerts}</h2>
           </div>
 
           <div className="card">
             <h3>AI Reviews</h3>
-            <h2>28</h2>
+            <h2>{stats.aiReviews}</h2>
           </div>
         </div>
 

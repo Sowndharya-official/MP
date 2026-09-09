@@ -3,7 +3,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 60px;
-  border-bottom: 1px solid #1f2937;
+  background: #ffffff;
+  border-bottom: 1px solid #e9e3f5;
 }
 
 .navbar-brand {
@@ -12,7 +13,7 @@
   gap: 10px;
   font-size: 20px;
   font-weight: 700;
-  color: #22d3ee;
+  color: #8069c9;
   cursor: pointer;
 }
 
@@ -26,13 +27,13 @@
 }
 
 .navbar-links a {
-  color: #cbd5e1;
+  color: #5f5a70;
   text-decoration: none;
   font-size: 15px;
 }
 
 .navbar-links a:hover {
-  color: #22d3ee;
+  color: #8069c9;
 }
 
 .navbar-actions {
@@ -42,7 +43,7 @@
 }
 
 .navbar-user {
-  color: #94a3b8;
+  color: #777286;
   font-size: 14px;
   margin-right: 4px;
 }

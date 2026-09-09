@@ -1,10 +1,11 @@
 .status-card {
-  background: #0f172a;
-  border: 1px solid #1f2937;
+  background: #ffffff;
+  border: 1px solid #e5def3;
   border-radius: 16px;
   padding: 28px;
   width: 100%;
   max-width: 480px;
+  box-shadow: 0 8px 24px rgba(126, 104, 180, 0.08);
 }
 
 .status-card-header {
@@ -16,11 +17,11 @@
 
 .status-card-header h3 {
   font-size: 18px;
-  color: #f8fafc;
+  color: #332d45;
 }
 
 .status-icon {
-  color: #22d3ee;
+  color: #8b7bd8;
 }
 
 .status-row {
@@ -28,8 +29,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #1e293b;
-  color: #cbd5e1;
+  border-bottom: 1px solid #eeeaf6;
+  color: #625d70;
   font-size: 15px;
 }
 
@@ -38,10 +39,10 @@
 }
 
 .status-badge.done {
-  color: #10b981;
+  color: #4caf87;
 }
 
 .status-badge.progress {
-  color: #f59e0b;
+  color: #d99a3d;
   font-size: 13px;
 }

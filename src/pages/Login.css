@@ -1,167 +1,211 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-body{
-
-background:#07111f;
-
+body {
+    background: #f8f9ff;
+    color: #403b56;
 }
 
-.login-page{
+/* Login Page */
 
-height:100vh;
+.login-page {
+    min-height: 100vh;
 
-display:flex;
+    display: flex;
 
-justify-content:center;
+    justify-content: center;
 
-align-items:center;
+    align-items: center;
 
-background:
-radial-gradient(circle at top left,#0b5cab 0%,transparent 35%),
-radial-gradient(circle at bottom right,#008cff 0%,transparent 35%),
-#07111f;
+    background:
+        radial-gradient(
+            circle at top left,
+            #e7e1ff 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #dff4ff 0%,
+            transparent 35%
+        ),
+        #f8f9ff;
 
-padding:20px;
-
+    padding: 20px;
 }
 
-.login-card{
+/* Login Card */
 
-width:420px;
+.login-card {
+    width: 420px;
 
-background:rgba(255,255,255,.05);
+    background: rgba(255, 255, 255, 0.95);
 
-backdrop-filter:blur(25px);
+    backdrop-filter: blur(20px);
 
-padding:45px;
+    padding: 45px;
 
-border-radius:25px;
+    border-radius: 25px;
 
-border:1px solid rgba(255,255,255,.08);
+    border: 1px solid #e8e2f5;
 
-box-shadow:0 20px 50px rgba(0,0,0,.45);
-
+    box-shadow:
+        0 20px 50px rgba(110, 88, 160, 0.12);
 }
 
-.login-card h1{
+/* Heading */
 
-text-align:center;
+.login-card h1 {
+    text-align: center;
 
-color:#35d8ff;
+    color: #7c5ce6;
 
-margin-bottom:12px;
-
+    margin-bottom: 12px;
 }
 
-.login-card p{
+/* Description */
 
-text-align:center;
+.login-card p {
+    text-align: center;
 
-color:#b6c4d6;
+    color: #77718a;
 
-margin-bottom:30px;
-
+    margin-bottom: 30px;
 }
 
-.login-card input{
+/* Input */
 
-width:100%;
+.login-card input {
+    width: 100%;
 
-padding:16px;
+    padding: 16px;
 
-margin-bottom:20px;
+    margin-bottom: 20px;
 
-background:#132238;
+    background: #f5f7ff;
 
-border:none;
+    border: 1px solid #e3def2;
 
-outline:none;
+    outline: none;
 
-border-radius:12px;
+    border-radius: 12px;
 
-color:white;
+    color: #403b56;
 
-font-size:15px;
+    font-size: 15px;
 
+    transition: 0.3s;
 }
 
-.login-card input::placeholder{
+/* Input Focus */
 
-color:#8aa4c2;
+.login-card input:focus {
+    border-color: #b9a7f5;
 
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(167, 139, 250, 0.12);
 }
 
-.login-card button{
+/* Placeholder */
 
-width:100%;
-
-padding:16px;
-
-border:none;
-
-border-radius:12px;
-
-background:linear-gradient(90deg,#00c6ff,#0072ff);
-
-color:white;
-
-font-size:16px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:.3s;
-
+.login-card input::placeholder {
+    color: #aaa5b8;
 }
 
-.login-card button:hover{
+/* Button */
 
-transform:translateY(-3px);
+.login-card button {
+    width: 100%;
 
-box-shadow:0 10px 25px rgba(0,153,255,.35);
+    padding: 16px;
 
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #a78bfa,
+            #8b7cf6
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
 }
 
-.bottom-text{
+/* Button Hover */
 
-margin-top:25px;
+.login-card button:hover {
+    transform: translateY(-3px);
 
-text-align:center;
+    background:
+        linear-gradient(
+            90deg,
+            #9275ed,
+            #7767e8
+        );
 
-color:#b6c4d6;
-
+    box-shadow:
+        0 10px 25px rgba(139, 124, 246, 0.25);
 }
 
-.bottom-text a{
+/* Bottom Text */
 
-margin-left:8px;
+.bottom-text {
+    margin-top: 25px;
 
-color:#35d8ff;
+    text-align: center;
 
-text-decoration:none;
-
-font-weight:600;
-
+    color: #77718a;
 }
 
-.back-home{
+/* Signup Link */
 
-display:block;
+.bottom-text a {
+    margin-left: 8px;
 
-text-align:center;
+    color: #8065df;
 
-margin-top:25px;
+    text-decoration: none;
 
-text-decoration:none;
+    font-weight: 600;
+}
 
-color:#35d8ff;
+.bottom-text a:hover {
+    color: #6748c7;
+}
 
+/* Back Home */
+
+.back-home {
+    display: block;
+
+    text-align: center;
+
+    margin-top: 25px;
+
+    text-decoration: none;
+
+    color: #8065df;
+
+    transition: 0.3s;
+}
+
+.back-home:hover {
+    color: #6748c7;
 }

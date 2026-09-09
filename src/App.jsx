@@ -13,7 +13,9 @@ import Dashboard from "./pages/Dashboard";
 import UploadProject from "./pages/UploadProject";
 import Analysis from "./pages/Analysis";
 import Deploy from "./pages/Deploy";
-
+import NewProject from "./pages/NewProject";
+import Preview from "./pages/Preview";
+import SecurityReport from "./pages/SecurityReport";
 function App() {
   return (
     <BrowserRouter>
@@ -26,11 +28,18 @@ function App() {
         <Route path="/signup" element={<Signup />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/new-project" element={<NewProject />} />
+        <Route path="/preview" element={<Preview />} />
+        <Route
+           path="/security-report"
+            element={<SecurityReport />}
+          />
 
         <Route
           path="/upload-project"
           element={<UploadProject />}
         />
+
 
         <Route
           path="/analysis"
