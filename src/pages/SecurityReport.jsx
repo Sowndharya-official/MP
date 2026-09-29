@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const SecurityReport = () => {
+  const [files, setFiles] = useState(null);
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -15,38 +16,55 @@ const SecurityReport = () => {
   // =====================================================
 
   useEffect(() => {
-    const runSecurityCheck = async () => {
-      try {
-        const response = await fetch(
-          "/api/ai/security-check",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+  const runSecurityCheck = async () => {
+    try {
+      const savedProject = sessionStorage.getItem("generatedProject");
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.message || "Security analysis failed."
-          );
-        }
-
-        setReport(data.report);
-
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (!savedProject) {
+        throw new Error("Generated website files were not found.");
       }
-    };
 
-    runSecurityCheck();
-  }, []);
+      const project = JSON.parse(savedProject);
 
+      if (!project.files) {
+        throw new Error("Generated website files are missing.");
+      }
+
+      setFiles(project.files);
+
+      const response = await fetch(
+        "/api/ai/security-check",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            files: project.files,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Security analysis failed."
+        );
+      }
+
+      setReport(data.report);
+
+    } catch (err) {
+      console.error("Security analysis error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  runSecurityCheck();
+}, []);
   // =====================================================
   // DEPLOY TO VERCEL
   // =====================================================
@@ -57,15 +75,30 @@ const SecurityReport = () => {
       setDeployError("");
       setDeployment(null);
 
-      const response = await fetch(
-        "/api/deploy",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const savedProject = sessionStorage.getItem("generatedProject");
+
+if (!savedProject) {
+  throw new Error("Generated website files were not found.");
+}
+
+const project = JSON.parse(savedProject);
+
+if (!project.files) {
+  throw new Error("Generated website files are missing.");
+}
+
+const response = await fetch(
+  "/api/deploy",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      files: project.files,
+    }),
+  }
+);
 
       const data = await response.json();
 
