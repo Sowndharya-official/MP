@@ -18,7 +18,7 @@ function Dashboard() {
     const fetchStats = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/dashboard/stats"
+          "/api/dashboard/stats"
         );
 
         const data = await response.json();

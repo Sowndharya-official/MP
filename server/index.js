@@ -24,41 +24,31 @@ const statsFile = path.join(
   "dashboardStats.json"
 );
 
+const defaultStats = {
+  totalProjects: 12,
+  deployments: 18,
+  securityAlerts: 5,
+  aiReviews: 28,
+};
+
 const getStats = () => {
-  if (!fs.existsSync(statsFile)) {
-    const defaultStats = {
-      totalProjects: 12,
-      deployments: 18,
-      securityAlerts: 5,
-      aiReviews: 28,
-    };
-
-    fs.writeFileSync(
-      statsFile,
-      JSON.stringify(defaultStats, null, 2),
-      "utf8"
-    );
-
-    return defaultStats;
+  try {
+    if (fs.existsSync(statsFile)) {
+      return JSON.parse(
+        fs.readFileSync(statsFile, "utf8")
+      );
+    }
+  } catch (error) {
+    console.error("Stats file read error:", error);
   }
 
-  return JSON.parse(
-    fs.readFileSync(statsFile, "utf8")
-  );
+  return { ...defaultStats };
 };
 
-const saveStats = (stats) => {
-  fs.writeFileSync(
-    statsFile,
-    JSON.stringify(stats, null, 2),
-    "utf8"
-  );
+const saveStats = () => {
+  // Vercel serverless filesystem is read-only.
+  // Statistics are not persisted in production.
 };
-
-app.use(cors());
-
-app.use(express.json({ limit: "2mb" }));
-
 
 // =====================================================
 // HOME / HEALTH CHECK
@@ -78,7 +68,7 @@ app.get("/", (req, res) => {
 
 app.post("/api/ai/generate", async (req, res) => {
   try {
-    const { prompt } = req.body;
+    const { prompt } = req.body || {};
 
     // Validate prompt
     if (!prompt || !prompt.trim()) {
@@ -108,44 +98,7 @@ saveStats(stats);
     // -------------------------------------------------
     // 2. Create generated-project directory
     // -------------------------------------------------
-
-    const projectDir = path.join(
-      process.cwd(),
-      "server",
-      "generated-project"
-    );
-
-    fs.mkdirSync(projectDir, {
-      recursive: true,
-    });
-
-    // -------------------------------------------------
-    // 3. Save generated files
-    // -------------------------------------------------
-
-    fs.writeFileSync(
-      path.join(projectDir, "index.html"),
-      files["index.html"],
-      "utf8"
-    );
-
-    fs.writeFileSync(
-      path.join(projectDir, "style.css"),
-      files["style.css"],
-      "utf8"
-    );
-
-    fs.writeFileSync(
-      path.join(projectDir, "script.js"),
-      files["script.js"],
-      "utf8"
-    );
-
-    console.log(
-      "Generated website saved to:",
-      projectDir
-    );
-
+console.log("Generated website created successfully.");
     // -------------------------------------------------
     // 4. Send generated files to frontend
     // -------------------------------------------------
@@ -178,101 +131,41 @@ saveStats(stats);
 
 app.post("/api/ai/security-check", async (req, res) => {
   try {
+    console.log("Starting AI security analysis...");
 
-    console.log(
-      "Starting AI security analysis..."
-    );
-
-    // -------------------------------------------------
-    // 1. Locate generated project
-    // -------------------------------------------------
-
-    const projectDir = path.join(
-      process.cwd(),
-      "server",
-      "generated-project"
-    );
-
-    // -------------------------------------------------
-    // 2. Check whether generated files exist
-    // -------------------------------------------------
-
-    const htmlPath = path.join(
-      projectDir,
-      "index.html"
-    );
-
-    const cssPath = path.join(
-      projectDir,
-      "style.css"
-    );
-
-    const jsPath = path.join(
-      projectDir,
-      "script.js"
-    );
+    const { files } = req.body || {};
 
     if (
-      !fs.existsSync(htmlPath) ||
-      !fs.existsSync(cssPath) ||
-      !fs.existsSync(jsPath)
+      !files ||
+      !files["index.html"] ||
+      !files["style.css"] ||
+      !files["script.js"]
     ) {
-      return res.status(404).json({
+      return res.status(400).json({
         success: false,
-        message:
-          "Generated website files were not found. Please generate a website first.",
+        message: "Generated website files are missing.",
       });
     }
 
-    // -------------------------------------------------
-    // 3. Read generated files
-    // -------------------------------------------------
+    const html = files["index.html"];
+    const css = files["style.css"];
+    const js = files["script.js"];
 
-    const html = fs.readFileSync(
-      htmlPath,
-      "utf8"
-    );
-
-    const css = fs.readFileSync(
-      cssPath,
-      "utf8"
-    );
-
-    const js = fs.readFileSync(
-      jsPath,
-      "utf8"
-    );
-
-    console.log(
-      "Generated files loaded for security analysis."
-    );
-
-    // -------------------------------------------------
-    // 4. Send code to security AI service
-    // -------------------------------------------------
+    console.log("Generated files received for security analysis.");
 
     const report = await analyzeSecurity({
       html,
       css,
       js,
     });
-      // Update security alerts
-const stats = getStats();
 
-const findingsCount = Array.isArray(report.findings)
-  ? report.findings.length
-  : 0;
+    const findingsCount = Array.isArray(report.findings)
+      ? report.findings.length
+      : 0;
 
-stats.securityAlerts += findingsCount;
-
-saveStats(stats);
     console.log(
-      "Security analysis completed."
+      `Security analysis completed. Findings: ${findingsCount}`
     );
-
-    // -------------------------------------------------
-    // 5. Return security report
-    // -------------------------------------------------
 
     res.json({
       success: true,
@@ -281,7 +174,6 @@ saveStats(stats);
     });
 
   } catch (error) {
-
     console.error(
       "Security analysis error:",
       error
@@ -294,7 +186,6 @@ saveStats(stats);
     });
   }
 });
-
 // =====================================================
 // VERCEL DEPLOYMENT
 // =====================================================
@@ -303,7 +194,7 @@ app.post("/api/deploy", async (req, res) => {
   try {
     console.log("Starting Vercel deployment...");
 
-    const { files } = req.body;
+    const { files } = req.body || {};
 
 const deployment = await deployToVercel(files);
     // Update deployment statistics

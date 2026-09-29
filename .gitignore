@@ -37,3 +37,4 @@ build/
 # Uploaded/extracted project files
 uploads/
 extracted/
+.vercel

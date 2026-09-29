@@ -18,7 +18,7 @@ const SecurityReport = () => {
     const runSecurityCheck = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/ai/security-check",
+          "/api/ai/security-check",
           {
             method: "POST",
             headers: {
@@ -58,7 +58,7 @@ const SecurityReport = () => {
       setDeployment(null);
 
       const response = await fetch(
-        "http://localhost:5000/api/deploy",
+        "/api/deploy",
         {
           method: "POST",
           headers: {

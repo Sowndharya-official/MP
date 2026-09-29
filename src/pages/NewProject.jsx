@@ -13,17 +13,19 @@ const NewProject = () => {
   const handleGenerate = async (e) => {
     e.preventDefault();
 
-    if (!prompt.trim()) {
-      setError("Please describe the website you want to create.");
-      return;
-    }
+    console.log("PROMPT VALUE:", prompt);
+
+      if (!prompt.trim()) {
+        setError("Please describe the website you want to create.");
+        return;
+      }
 
     setLoading(true);
     setError("");
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/ai/generate",
+        "/api/ai/generate",
         {
           method: "POST",
           headers: {
@@ -118,35 +120,35 @@ const NewProject = () => {
 
           <form onSubmit={handleGenerate}>
 
-            <label htmlFor="prompt">
-              Website description
-            </label>
+  <label htmlFor="prompt">
+    Website description
+  </label>
 
-            <textarea
-              id="prompt"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Example: Create a modern portfolio website for a computer science student with a hero section, skills, projects and contact form..."
-              disabled={loading}
-            />
+  <textarea
+    id="prompt"
+    value={prompt}
+    onChange={(e) => setPrompt(e.target.value)}
+    placeholder="Example: Create a modern portfolio website for a computer science student with a hero section, skills, projects and contact form..."
+    disabled={loading}
+  />
 
-            {error && (
-              <div className="builder-error">
-                {error}
-              </div>
-            )}
+  {error && (
+    <div className="builder-error">
+      {error}
+    </div>
+  )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="generate-button"
-            >
-              {loading
-                ? "✨ Generating..."
-                : "✨ Generate Website"}
-            </button>
+  <button
+    type="submit"
+    disabled={loading}
+    className="generate-button"
+  >
+    {loading
+      ? "✨ Generating..."
+      : "✨ Generate Website"}
+  </button>
 
-          </form>
+</form>
 
           {/* GENERATED WEBSITE STATUS */}
 
